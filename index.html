@@ -5,12 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>曹嘉益的个人主页</title>
     <style>
+        /* 自定义全局滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* 页面入场动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* 基础样式 */
         body {
-            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            /* 采用更现代的系统默认无衬线字体栈 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #f4f7f9;
+            /* 淡淡的高级灰蓝渐变背景 */
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-attachment: fixed;
             margin: 0;
             padding: 0;
         }
@@ -27,38 +57,62 @@
             color: white;
             padding: 40px 20px;
             text-align: center;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(42, 82, 152, 0.2);
+            animation: fadeInUp 0.8s ease-out both;
         }
 
         header h1 {
             margin: 0;
-            font-size: 2rem;
-            letter-spacing: 1px;
+            font-size: 2.2rem;
+            letter-spacing: 2px; /* 增加字间距，显得更高级 */
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.15); /* 增加文字微阴影 */
         }
         
         header p {
             margin: 10px 0 0 0;
             font-size: 1.1rem;
             opacity: 0.9;
+            letter-spacing: 1px;
         }
 
-        /* 通用方框样式 */
-        .info-box {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        /* 通用方框样式 (加入毛玻璃效果) */
+        .info-box, .portfolio-section {
+            background: rgba(255, 255, 255, 0.85); /* 半透明白色 */
+            backdrop-filter: blur(12px);           /* 毛玻璃模糊效果 */
+            -webkit-backdrop-filter: blur(12px);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-top: 4px solid #2a5298;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out 0.2s both; /* 延时0.2秒入场 */
         }
 
-        .info-box h2 {
+        .info-box h2, .portfolio-section h2 {
             margin-top: 0;
             color: #2a5298;
-            font-size: 1.25rem;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+            font-size: 1.3rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* 微交互：鼠标悬停方框放大 */
+        .info-box:hover {
+            transform: translateY(-3px) scale(1.01); 
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1); 
+        }
+
+        /* 荧光笔高亮效果 */
+        .highlight {
+            background: linear-gradient(transparent 60%, #dbeafe 40%);
+            font-weight: 600;
+            color: #1e3c72;
+            padding: 0 2px;
         }
 
         /* 2. 上方两个方框布局 */
@@ -78,7 +132,7 @@
         .edu-item h3 {
             margin: 0 0 5px 0;
             font-size: 1.1rem;
-            color: #333;
+            color: #222;
         }
         .edu-item p {
             margin: 3px 0;
@@ -86,51 +140,69 @@
             color: #555;
         }
 
-        /* 3. 作品集表格样式 */
+        /* 3. 作品集表格样式优化 */
         .portfolio-section {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             margin-bottom: 30px;
-        }
-
-        .portfolio-section h2 {
-            color: #2a5298;
-            margin-top: 0;
+            animation-delay: 0.4s;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
+            border-collapse: separate;
+            border-spacing: 0 12px; /* 增加行距呼吸感 */
+            margin-top: 10px;
         }
 
-        table th, table td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-            font-size: 0.95rem;
+        table tr {
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border-radius: 8px;
         }
 
-        table th {
-            background-color: #f8f9fa;
-            color: #555;
-            font-weight: 600;
+        table td {
+            padding: 20px 15px;
+            border: none;
         }
+        
+        table td:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+        table td:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
 
+        /* 鼠标滑过某一行作品时，整行轻微浮起 */
         table tr:hover {
-            background-color: #fcfcfc;
+            background-color: #f8faff;
+            transform: translateY(-2px) translateX(4px); 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
         }
 
-        .link-btn {
+        /* 标签样式 (作品类型) */
+        .work-tag {
+            background: #eef2f7;
             color: #2a5298;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* 立体按钮样式 (超链接) */
+        .link-btn {
+            background-color: #2a5298;
+            color: #ffffff !important;
+            padding: 8px 16px;
+            border-radius: 6px;
             text-decoration: none;
-            font-weight: bold;
+            font-size: 0.9rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(42, 82, 152, 0.2);
+            font-weight: 500;
         }
 
         .link-btn:hover {
-            text-decoration: underline;
+            background-color: #1e3c72;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(42, 82, 152, 0.3);
         }
 
         /* 4. 底部板块布局 (左照片右文字) */
@@ -139,40 +211,52 @@
             grid-template-columns: 280px 1fr;
             gap: 20px;
             align-items: start;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
         }
 
+        /* 照片框艺术感处理 */
         .photo-box {
-            background: white;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 15px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             text-align: center;
+            transform: rotate(-2deg); /* 极轻微的倾斜，显得随性且有设计感 */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 回弹动画 */
+        }
+
+        .photo-box:hover {
+            transform: rotate(0deg) scale(1.03); /* 鼠标移上去自动扶正并放大 */
         }
 
         .photo-box img {
             width: 100%;
             height: auto;
-            border-radius: 4px;
+            border-radius: 6px;
             display: block;
             background-color: #eee;
         }
         
         /* 经历列表样式优化 */
         .exp-item {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         .exp-item:last-child {
             margin-bottom: 0;
         }
         .exp-item h3 {
             margin: 0;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             display: flex;
             justify-content: space-between;
+            color: #222;
         }
         .exp-item .role {
-            font-weight: normal;
-            color: #666;
+            font-weight: 500;
+            color: #2a5298;
             font-size: 1rem;
             margin-top: 4px;
             margin-bottom: 8px;
@@ -180,11 +264,11 @@
         .exp-item ul {
             margin: 0;
             padding-left: 20px;
-            color: #444;
+            color: #555;
             font-size: 0.95rem;
         }
         .exp-item ul li {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         /* 响应式：手机查看时自动变成一列 */
@@ -198,6 +282,7 @@
             }
             .photo-box {
                 order: 2; /* 手机端照片放下面，经历放上面 */
+                transform: rotate(0deg); /* 手机端取消倾斜 */
             }
             .exp-item h3 {
                 flex-direction: column;
@@ -221,7 +306,7 @@
                     <p><strong>硕士 | 社会学</strong> (2025.09 - 2026.10)</p>
                     <p>主修：应用社会学、社会科学研究方法、SPSS数据分析等。</p>
                 </div>
-                <hr style="border: 0; border-top: 1px dashed #eee; margin: 15px 0;">
+                <hr style="border: 0; border-top: 1px dashed rgba(0,0,0,0.1); margin: 15px 0;">
                 <div class="edu-item">
                     <h3>北京师范大学 (985)</h3>
                     <p><strong>本科 | 戏剧影视文学</strong> (2021.09 - 2025.06)</p>
@@ -232,8 +317,8 @@
             
           <div class="info-box">
                 <h2>💡 自我评价</h2>
-            <p>拥有“影视文学+社会学”复合背景，具备扎实的影视内容评估、制片统筹及社会学定量/定性分析能力。在爱奇艺等互联网与传媒大厂积累了深度的产品运营及内容统筹经验，擅长从用户需求出发，建立内容量化评估标准体系。</p>
-              <p>具备较强的跨部门沟通协调能力与团队领导力（曾独立搭建并管理15+人制片团队）。英语能力优秀（雅思7.0，六级556），熟练掌握剪映、PS和Office等办公软件，能快速适应高压、快节奏的工作环境。</p>
+            <p>拥有“影视文学+社会学”复合背景，具备扎实的<span class="highlight">影视内容评估</span>、<span class="highlight">制片统筹</span>及<span class="highlight">社会学定量/定性分析</span>能力。在爱奇艺等互联网与传媒大厂积累了深度的产品运营及内容统筹经验，擅长从用户需求出发，建立内容量化评估标准体系。</p>
+              <p>具备较强的<span class="highlight">跨部门沟通协调能力</span>与团队领导力（曾独立搭建并管理15+人制片团队）。英语能力优秀（雅思7.0，六级556），熟练掌握剪映、PS和Office等办公软件，能快速适应高压、快节奏的工作环境。</p>
             </div>
         </div>
 
@@ -242,33 +327,41 @@
             <table>
                 <thead>
                     <tr>
-                        <th width="20%">作品标题</th>
-                        <th width="15%">作品类型</th>
-                        <th width="15%">创作日期</th>
-                        <th width="15%">超链接</th>
-                        <th width="35%">作品描述</th>
+                        <th width="20%" style="text-align: left; color: #666;">作品标题</th>
+                        <th width="15%" style="text-align: left; color: #666;">作品类型</th>
+                        <th width="15%" style="text-align: left; color: #666;">创作日期</th>
+                        <th width="15%" style="text-align: left; color: #666;">超链接</th>
+                        <th width="35%" style="text-align: left; color: #666;">作品描述</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><strong>《世界末日》短片</strong></td>
-                        <td>制片</td>
+                        <td><span class="work-tag">制片</span></td>
                         <td>2024.12-2025.01</td>
-                        <td><a href="https://pan.baidu.com/s/18swzc-Jdzad-4Gh396Ps5A?pwd=yqw8" target="_blank" class="link-btn">点击查看网盘</a></td>
+                        <td>
+    <a href="https://pan.baidu.com/s/18swzc-Jdzad-4Gh396Ps5A?pwd=yqw8" target="_blank" class="link-btn">
+        点击查看
+    </a>
+</td>
                         <td>入围多伦多国际诺莱坞电影节等6项国际奖项。负责15+人员剧组招募与统筹，制定精细日程，通过谈判节省15%器材成本。</td>
                     </tr>
                     <tr>
                         <td><strong>《解忧杂货铺》</strong></td>
-                        <td>制片/编剧/录音</td>
+                        <td><span class="work-tag">制片/编剧/录音</span></td>
                         <td>2023.10-2023.12</td>
                         <td><a href="#" class="link-btn">点击查看</a></td>
                         <td>校园谈话节目。完成互动环节设计及现场录音统筹，2周内招募20+人员，筹集4000元经费并实现商业赞助回报。</td>
                     </tr>
                     <tr>
                         <td><strong>《果实熟了》短片</strong></td>
-                        <td>副导演/制片</td>
+                        <td><span class="work-tag">副导演/制片</span></td>
                         <td>2022.12-2023.01</td>
-                        <td><a href="https://pan.baidu.com/s/1lFdddjHvsp08aQqN4mv7YQ?pwd=uqxh" target="_blank" class="link-btn">点击查看网盘</a></td>
+                        <td>
+    <a href="https://pan.baidu.com/s/1lFdddjHvsp08aQqN4mv7YQ?pwd=uqxh" target="_blank" class="link-btn">
+        点击查看
+    </a>
+</td>
                         <td>获慕尼黑新浪潮短片电影节等4项国际奖项。负责团队面试与前期勘景节省20%现场时间，深度参与后期配乐及剪辑决策。</td>
                     </tr>
                 </tbody>
@@ -278,11 +371,11 @@
         <div class="bottom-row">
             <div class="photo-box">
                 <img src="me.jpg" alt="曹嘉益的照片">
-                <p style="margin-top: 10px; color: #666; font-size: 0.9rem;">个人形象照</p>
+                <p style="margin-top: 10px; color: #666; font-size: 0.9rem; font-weight: 500;">个人形象照</p>
                 <div style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
-                    <span style="background: #eef2f5; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; color: #555;">雅思 7.0</span>
-                    <span style="background: #eef2f5; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; color: #555;">视频剪辑</span>
-                    <span style="background: #eef2f5; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; color: #555;">SPSS分析</span>
+                    <span style="background: #eef2f5; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; color: #555;">雅思 7.0</span>
+                    <span style="background: #eef2f5; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; color: #555;">视频剪辑</span>
+                    <span style="background: #eef2f5; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; color: #555;">SPSS分析</span>
                 </div>
             </div>
 
@@ -299,7 +392,7 @@
                     </ul>
                 </div>
 
-                <hr style="border: 0; border-top: 1px dashed #eee; margin: 20px 0;">
+                <hr style="border: 0; border-top: 1px dashed rgba(0,0,0,0.1); margin: 20px 0;">
 
                 <div class="exp-item">
                     <h3><span>北京沐音天承文化传媒有限公司</span> <span style="font-size: 0.9rem; color: #888;">2024.10 - 2024.12</span></h3>
@@ -314,7 +407,7 @@
             </div>
         </div>
 
-        <footer style="text-align: center; margin-top: 40px; padding: 20px; color: #999; font-size: 0.85rem;">
+        <footer style="text-align: center; margin-top: 40px; padding: 20px; color: #888; font-size: 0.85rem; letter-spacing: 1px;">
             © 2024 - 2026 曹嘉益 | 本网页适用于求职简历附件展示
         </footer>
     </div>
