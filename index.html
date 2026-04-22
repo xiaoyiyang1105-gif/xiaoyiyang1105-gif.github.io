@@ -5,113 +5,156 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>曹嘉益的个人主页</title>
     <style>
-        /* 自定义全局滚动条 */
+        /* 字节风自定义滚动条 */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
             background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #DDE1E6;
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            background: #C9CDD4;
         }
 
         /* 页面入场动画 */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 基础样式 */
+        /* 小球悬浮呼吸动画 */
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-15px) translateX(10px); }
+        }
+
+        /* 基础样式 - 字节极简风 */
         body {
-            /* 采用更现代的系统默认无衬线字体栈 */
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
             line-height: 1.6;
-            color: #333;
-            /* 淡淡的高级灰蓝渐变背景 */
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            background-attachment: fixed;
+            color: #1F2329; /* 字节标志性的深灰字色 */
+            background-color: #F7F8FA; /* 极干净的浅灰底色 */
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* === 动态背景小球层 === */
+        .bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none; /* 确保小球不会阻挡鼠标点击 */
+        }
+        .parallax-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            will-change: transform;
+        }
+        .sphere {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: floatAnim 8s ease-in-out infinite;
+        }
+        /* 小球1：左上角字节蓝 */
+        .sphere-1 {
+            width: 280px; height: 280px;
+            top: -50px; left: -50px;
+            background: radial-gradient(circle at 30% 30%, #E8F0FF 0%, #A3C4FF 50%, #669CFF 100%);
+            box-shadow: inset -20px -20px 40px rgba(22, 100, 255, 0.1);
+        }
+        /* 小球2：右侧浅紫 */
+        .sphere-2 {
+            width: 200px; height: 200px;
+            top: 40%; right: 5%;
+            background: radial-gradient(circle at 30% 30%, #F5E8FF 0%, #D4A3FF 50%, #B866FF 100%);
+            box-shadow: inset -15px -15px 30px rgba(184, 102, 255, 0.1);
+            animation-delay: -2s;
+            animation-duration: 10s;
+        }
+        /* 小球3：左下角青绿 */
+        .sphere-3 {
+            width: 350px; height: 350px;
+            bottom: -100px; left: 15%;
+            background: radial-gradient(circle at 30% 30%, #E6FCF5 0%, #8DE0D8 50%, #30C2A5 100%);
+            box-shadow: inset -25px -25px 50px rgba(48, 194, 165, 0.1);
+            animation-delay: -4s;
+            animation-duration: 12s;
         }
 
         .container {
             max-width: 1050px;
             margin: 0 auto;
             padding: 20px;
+            position: relative; /* 确保内容在小球上方 */
+            z-index: 1;
         }
 
         /* 1. 欢迎板块 */
         header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: #1664FF; /* 纯正的字节蓝 */
             color: white;
             padding: 40px 20px;
             text-align: center;
             border-radius: 12px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(42, 82, 152, 0.2);
+            box-shadow: 0 10px 25px rgba(22, 100, 255, 0.2);
             animation: fadeInUp 0.8s ease-out both;
         }
 
         header h1 {
             margin: 0;
             font-size: 2.2rem;
-            letter-spacing: 2px; /* 增加字间距，显得更高级 */
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.15); /* 增加文字微阴影 */
+            letter-spacing: 2px;
+            font-weight: 600;
         }
         
         header p {
             margin: 10px 0 0 0;
             font-size: 1.1rem;
             opacity: 0.9;
-            letter-spacing: 1px;
         }
 
-        /* 通用方框样式 (加入毛玻璃效果) */
+        /* 通用方框样式 - 纯白极简卡片 */
         .info-box, .portfolio-section {
-            background: rgba(255, 255, 255, 0.85); /* 半透明白色 */
-            backdrop-filter: blur(12px);           /* 毛玻璃模糊效果 */
-            -webkit-backdrop-filter: blur(12px);
+            background: #FFFFFF;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-top: 4px solid #2a5298;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            border: 1px solid #EBEDF0;
             transition: all 0.3s ease;
-            animation: fadeInUp 0.8s ease-out 0.2s both; /* 延时0.2秒入场 */
+            animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
         .info-box h2, .portfolio-section h2 {
             margin-top: 0;
-            color: #2a5298;
+            color: #1664FF;
             font-size: 1.3rem;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid #EBEDF0;
             padding-bottom: 12px;
-            letter-spacing: 1px;
+            font-weight: 600;
         }
 
         /* 微交互：鼠标悬停方框放大 */
-        .info-box:hover {
-            transform: translateY(-3px) scale(1.01); 
-            box-shadow: 0 12px 40px rgba(0,0,0,0.1); 
+        .info-box:hover, .portfolio-section:hover {
+            transform: translateY(-4px); 
+            box-shadow: 0 12px 30px rgba(22, 100, 255, 0.08); 
         }
 
-        /* 荧光笔高亮效果 */
+        /* 荧光笔高亮效果 - 字节浅蓝 */
         .highlight {
-            background: linear-gradient(transparent 60%, #dbeafe 40%);
+            background: linear-gradient(transparent 60%, #E8F0FF 40%);
             font-weight: 600;
-            color: #1e3c72;
+            color: #1664FF;
             padding: 0 2px;
         }
 
@@ -132,12 +175,13 @@
         .edu-item h3 {
             margin: 0 0 5px 0;
             font-size: 1.1rem;
-            color: #222;
+            color: #1F2329;
+            font-weight: 600;
         }
         .edu-item p {
             margin: 3px 0;
             font-size: 0.95rem;
-            color: #555;
+            color: #4E5969;
         }
 
         /* 3. 作品集表格样式优化 */
@@ -149,63 +193,60 @@
         table {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 0 12px; /* 增加行距呼吸感 */
+            border-spacing: 0 8px;
             margin-top: 10px;
         }
 
         table tr {
-            background-color: #ffffff;
+            background-color: #F7F8FA; /* 表格浅灰底，区分内容 */
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
             border-radius: 8px;
         }
 
         table td {
-            padding: 20px 15px;
+            padding: 18px 15px;
             border: none;
+            color: #4E5969;
         }
         
-        table td:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+        table td:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; color: #1F2329; }
         table td:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
 
-        /* 鼠标滑过某一行作品时，整行轻微浮起 */
         table tr:hover {
-            background-color: #f8faff;
-            transform: translateY(-2px) translateX(4px); 
-            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            background-color: #E8F0FF;
+            transform: translateX(4px); 
         }
 
-        /* 标签样式 (作品类型) */
+        /* 标签样式 */
         .work-tag {
-            background: #eef2f7;
-            color: #2a5298;
-            padding: 5px 12px;
-            border-radius: 20px;
+            background: #E8F0FF;
+            color: #1664FF;
+            padding: 4px 10px;
+            border-radius: 4px; /* 字节风格偏好微圆角而非大圆角 */
             font-size: 0.85rem;
             font-weight: 500;
         }
 
-        /* 立体按钮样式 (超链接) */
+        /* 立体按钮样式 */
         .link-btn {
-            background-color: #2a5298;
+            background-color: #1664FF;
             color: #ffffff !important;
-            padding: 8px 16px;
-            border-radius: 6px;
+            padding: 6px 14px;
+            border-radius: 4px;
             text-decoration: none;
             font-size: 0.9rem;
             display: inline-block;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(42, 82, 152, 0.2);
             font-weight: 500;
         }
 
         .link-btn:hover {
-            background-color: #1e3c72;
+            background-color: #0E4EDB;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(42, 82, 152, 0.3);
+            box-shadow: 0 4px 10px rgba(22, 100, 255, 0.3);
         }
 
-        /* 4. 底部板块布局 (左照片右文字) */
+        /* 4. 底部板块布局 */
         .bottom-row {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -214,83 +255,59 @@
             animation: fadeInUp 0.8s ease-out 0.6s both;
         }
 
-        /* 照片框艺术感处理 */
+        /* 照片框纯净处理 */
         .photo-box {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: #FFFFFF;
             padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            border: 1px solid #EBEDF0;
             text-align: center;
-            transform: rotate(-2deg); /* 极轻微的倾斜，显得随性且有设计感 */
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 回弹动画 */
+            transition: all 0.3s ease;
         }
 
         .photo-box:hover {
-            transform: rotate(0deg) scale(1.03); /* 鼠标移上去自动扶正并放大 */
+            transform: translateY(-4px); 
+            box-shadow: 0 12px 30px rgba(22, 100, 255, 0.08); 
         }
 
         .photo-box img {
             width: 100%;
             height: auto;
-            border-radius: 6px;
+            border-radius: 8px;
             display: block;
             background-color: #eee;
         }
         
-        /* 经历列表样式优化 */
-        .exp-item {
-            margin-bottom: 25px;
-        }
-        .exp-item:last-child {
-            margin-bottom: 0;
-        }
+        /* 经历列表 */
+        .exp-item { margin-bottom: 25px; }
+        .exp-item:last-child { margin-bottom: 0; }
         .exp-item h3 {
-            margin: 0;
-            font-size: 1.15rem;
-            display: flex;
-            justify-content: space-between;
-            color: #222;
+            margin: 0; font-size: 1.15rem; display: flex; justify-content: space-between; color: #1F2329;
         }
         .exp-item .role {
-            font-weight: 500;
-            color: #2a5298;
-            font-size: 1rem;
-            margin-top: 4px;
-            margin-bottom: 8px;
+            font-weight: 500; color: #1664FF; font-size: 1rem; margin-top: 4px; margin-bottom: 8px;
         }
         .exp-item ul {
-            margin: 0;
-            padding-left: 20px;
-            color: #555;
-            font-size: 0.95rem;
+            margin: 0; padding-left: 20px; color: #4E5969; font-size: 0.95rem;
         }
-        .exp-item ul li {
-            margin-bottom: 8px;
-        }
+        .exp-item ul li { margin-bottom: 8px; }
 
-        /* 响应式：手机查看时自动变成一列 */
         @media (max-width: 768px) {
-            .top-row, .bottom-row {
-                grid-template-columns: 1fr;
-            }
-            .bottom-row {
-                display: flex;
-                flex-direction: column;
-            }
-            .photo-box {
-                order: 2; /* 手机端照片放下面，经历放上面 */
-                transform: rotate(0deg); /* 手机端取消倾斜 */
-            }
-            .exp-item h3 {
-                flex-direction: column;
-            }
+            .top-row, .bottom-row { grid-template-columns: 1fr; }
+            .bottom-row { display: flex; flex-direction: column; }
+            .photo-box { order: 2; }
+            .exp-item h3 { flex-direction: column; }
         }
     </style>
 </head>
 <body>
+
+    <div class="bg-canvas">
+        <div class="parallax-wrapper" id="p1"><div class="sphere sphere-1"></div></div>
+        <div class="parallax-wrapper" id="p2"><div class="sphere sphere-2"></div></div>
+        <div class="parallax-wrapper" id="p3"><div class="sphere sphere-3"></div></div>
+    </div>
 
     <div class="container">
         <header>
@@ -306,7 +323,7 @@
                     <p><strong>硕士 | 社会学</strong> (2025.09 - 2026.10)</p>
                     <p>主修：应用社会学、社会科学研究方法、SPSS数据分析等。</p>
                 </div>
-                <hr style="border: 0; border-top: 1px dashed rgba(0,0,0,0.1); margin: 15px 0;">
+                <hr style="border: 0; border-top: 1px dashed #EBEDF0; margin: 15px 0;">
                 <div class="edu-item">
                     <h3>北京师范大学 (985)</h3>
                     <p><strong>本科 | 戏剧影视文学</strong> (2021.09 - 2025.06)</p>
@@ -317,7 +334,7 @@
             
           <div class="info-box">
                 <h2>💡 自我评价</h2>
-            <p>拥有“影视文学+社会学”复合背景，具备扎实的<span class="highlight">影视内容评估</span>、<span class="highlight">制片统筹</span>及<span class="highlight">社会学定量/定性分析</span>能力。在爱奇艺等互联网与传媒大厂积累了深度的产品运营及内容统筹经验，擅长从用户需求出发，建立内容量化评估标准体系。</p>
+            <p>拥有“影视文学+社会学”复合背景，具备扎实的<span class="highlight">影视内容评估</span>、<span class="highlight">制片统筹</span>及社会学定量/定性分析能力。在爱奇艺等互联网与传媒大厂积累了深度的产品运营及内容统筹经验，擅长从用户需求出发，建立内容量化评估标准体系。</p>
               <p>具备较强的<span class="highlight">跨部门沟通协调能力</span>与团队领导力（曾独立搭建并管理15+人制片团队）。英语能力优秀（雅思7.0，六级556），熟练掌握剪映、PS和Office等办公软件，能快速适应高压、快节奏的工作环境。</p>
             </div>
         </div>
@@ -327,11 +344,11 @@
             <table>
                 <thead>
                     <tr>
-                        <th width="20%" style="text-align: left; color: #666;">作品标题</th>
-                        <th width="15%" style="text-align: left; color: #666;">作品类型</th>
-                        <th width="15%" style="text-align: left; color: #666;">创作日期</th>
-                        <th width="15%" style="text-align: left; color: #666;">超链接</th>
-                        <th width="35%" style="text-align: left; color: #666;">作品描述</th>
+                        <th width="20%" style="text-align: left; color: #86909C; font-weight: normal;">作品标题</th>
+                        <th width="15%" style="text-align: left; color: #86909C; font-weight: normal;">作品类型</th>
+                        <th width="15%" style="text-align: left; color: #86909C; font-weight: normal;">创作日期</th>
+                        <th width="15%" style="text-align: left; color: #86909C; font-weight: normal;">超链接</th>
+                        <th width="35%" style="text-align: left; color: #86909C; font-weight: normal;">作品描述</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -339,16 +356,12 @@
                         <td><strong>《世界末日》短片</strong></td>
                         <td><span class="work-tag">制片</span></td>
                         <td>2024.12-2025.01</td>
-                        <td>
-    <a href="https://pan.baidu.com/s/18swzc-Jdzad-4Gh396Ps5A?pwd=yqw8" target="_blank" class="link-btn">
-        点击查看
-    </a>
-</td>
+                        <td><a href="https://pan.baidu.com/s/18swzc-Jdzad-4Gh396Ps5A?pwd=yqw8" target="_blank" class="link-btn">点击查看</a></td>
                         <td>入围多伦多国际诺莱坞电影节等6项国际奖项。负责15+人员剧组招募与统筹，制定精细日程，通过谈判节省15%器材成本。</td>
                     </tr>
                     <tr>
                         <td><strong>《解忧杂货铺》</strong></td>
-                        <td><span class="work-tag">制片/编剧/录音</span></td>
+                        <td><span class="work-tag">制片/编剧</span></td>
                         <td>2023.10-2023.12</td>
                         <td><a href="#" class="link-btn">点击查看</a></td>
                         <td>校园谈话节目。完成互动环节设计及现场录音统筹，2周内招募20+人员，筹集4000元经费并实现商业赞助回报。</td>
@@ -357,11 +370,7 @@
                         <td><strong>《果实熟了》短片</strong></td>
                         <td><span class="work-tag">副导演/制片</span></td>
                         <td>2022.12-2023.01</td>
-                        <td>
-    <a href="https://pan.baidu.com/s/1lFdddjHvsp08aQqN4mv7YQ?pwd=uqxh" target="_blank" class="link-btn">
-        点击查看
-    </a>
-</td>
+                        <td><a href="https://pan.baidu.com/s/1IFdddjHvsp08aQqN4mv7YQ?pwd=uqxh" target="_blank" class="link-btn">点击查看</a></td>
                         <td>获慕尼黑新浪潮短片电影节等4项国际奖项。负责团队面试与前期勘景节省20%现场时间，深度参与后期配乐及剪辑决策。</td>
                     </tr>
                 </tbody>
@@ -371,19 +380,14 @@
         <div class="bottom-row">
             <div class="photo-box">
                 <img src="me.jpg" alt="曹嘉益的照片">
-                <p style="margin-top: 10px; color: #666; font-size: 0.9rem; font-weight: 500;">个人形象照</p>
-                <div style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
-                    <span style="background: #eef2f5; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; color: #555;">雅思 7.0</span>
-                    <span style="background: #eef2f5; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; color: #555;">视频剪辑</span>
-                    <span style="background: #eef2f5; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; color: #555;">SPSS分析</span>
-                </div>
+                <p style="margin-top: 10px; color: #86909C; font-size: 0.9rem;">个人形象照</p>
             </div>
 
             <div class="info-box">
                 <h2>💼 实习经历</h2>
                 
                 <div class="exp-item">
-                    <h3><span>北京爱奇艺科技有限公司</span> <span style="font-size: 0.9rem; color: #888;">2025.02 - 2025.06</span></h3>
+                    <h3><span>北京爱奇艺科技有限公司</span> <span style="font-size: 0.9rem; color: #86909C; font-weight: normal;">2025.02 - 2025.06</span></h3>
                     <div class="role">智能制作部 | 产品运营</div>
                     <ul>
                         <li><strong>量化设计与框架建构：</strong>从0搭建剧本评估7项量化标准，产出包含节奏、卖点等维度的量化文档，使电影部门评估效率提升60%。</li>
@@ -392,10 +396,10 @@
                     </ul>
                 </div>
 
-                <hr style="border: 0; border-top: 1px dashed rgba(0,0,0,0.1); margin: 20px 0;">
+                <hr style="border: 0; border-top: 1px dashed #EBEDF0; margin: 20px 0;">
 
                 <div class="exp-item">
-                    <h3><span>北京沐音天承文化传媒有限公司</span> <span style="font-size: 0.9rem; color: #888;">2024.10 - 2024.12</span></h3>
+                    <h3><span>北京沐音天承文化传媒有限公司</span> <span style="font-size: 0.9rem; color: #86909C; font-weight: normal;">2024.10 - 2024.12</span></h3>
                     <div class="role">有声书 | 内容运营</div>
                     <ul>
                         <li><strong>跨部门资源统筹：</strong>统筹央视一套《六姊妹》片尾曲等4个音乐项目，协调编剧、录音、后期3个跨部门10+名成员，2个月内实现100%交付率。</li>
@@ -407,10 +411,25 @@
             </div>
         </div>
 
-        <footer style="text-align: center; margin-top: 40px; padding: 20px; color: #888; font-size: 0.85rem; letter-spacing: 1px;">
+        <footer style="text-align: center; margin-top: 40px; padding: 20px; color: #86909C; font-size: 0.85rem;">
             © 2024 - 2026 曹嘉益 | 本网页适用于求职简历附件展示
         </footer>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const p1 = document.getElementById('p1');
+            const p2 = document.getElementById('p2');
+            const p3 = document.getElementById('p3');
+
+            window.addEventListener('scroll', () => {
+                let scrollY = window.scrollY;
+                // 当你向下滚动时，设置小球以不同的系数反向/正向移动，形成视差落差
+                p1.style.transform = `translateY(${scrollY * 0.3}px)`;
+                p2.style.transform = `translateY(${scrollY * -0.2}px)`;
+                p3.style.transform = `translateY(${scrollY * 0.15}px)`;
+            });
+        });
+    </script>
 </body>
 </html>
